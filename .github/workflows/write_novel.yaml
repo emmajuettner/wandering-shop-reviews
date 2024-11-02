@@ -1,0 +1,26 @@
+name: write_novel
+
+on:
+  workflow_dispatch:       # allow running manually
+
+jobs:
+  write_novel:
+    name : Write Novel
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3 # checkout the repository content to github runner
+        with:
+          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install jinja2-humanize-extension
+      - name: Run py script to write novel
+        run: python write_novel.py
+        shell: sh
+      - name: Push changes back to repo
+        uses: actions-js/push@v1.4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}

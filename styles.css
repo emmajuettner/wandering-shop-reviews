@@ -1,0 +1,25 @@
+body {
+	font-size: 1.2em;
+	max-width: 600px;
+	width: 90%;
+	margin: 0 auto;
+}
+
+h1 {
+	text-align: center;
+	margin-bottom: 0.3em;
+}
+
+h2 {
+	text-align: center;
+	font-size: 0.8em;
+	font-weight: normal;
+	color: #0B0B0B;
+	margin-bottom: -1.5em;
+}
+
+hr {
+	width: 10%;
+	margin-top: 2.5em;
+	margin-bottom: 2.5em;
+}
