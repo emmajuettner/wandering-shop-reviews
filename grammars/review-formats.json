@@ -1,0 +1,6 @@
+{
+	"positive-format" : ["Offered a huge selection of products: #item#, #item#, #item#, #item#... I purchased #item# which was #item-descriptor#"],
+	"mixed-format" : ["Decent selection and I found #item# but the proprietor was #person-descriptor#",
+			"#time-phrase# I stopped in but it's not there anymore???"],
+	"negative-format" : ["A horrible experience, I bought #item# but it was #item-descriptor#"]
+}

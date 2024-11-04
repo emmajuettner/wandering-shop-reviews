@@ -11,20 +11,55 @@ from tracery.modifiers import base_english
 
 # Utility functions
 
+def aggregateFlavorTextGrammars():
+	flavorGrammars = ["pottery-and-porcelain","a-tangled-tale"]
+	skipFields = ["source-url","source-title","source-author","source-date"]
+	combinedFlavorGrammar = {}
+	for grammarFileName in flavorGrammars:
+		grammarStr = Path("grammars/"+grammarFileName+".json").read_text()
+		grammarJson = json.loads(grammarStr)
+		for key in grammarJson.keys():
+			if (key not in skipFields):
+				combinedFlavorGrammar.setdefault(key, [])
+				combinedFlavorGrammar[key]+=grammarJson[key]
+	return combinedFlavorGrammar
+
+allFlavorGrammars = aggregateFlavorTextGrammars()
+
 def generateFromGrammar(grammarFile, origin):
 	grammarStr = Path("grammars/"+grammarFile+".json").read_text()
 	grammarJson = json.loads(grammarStr)
 	grammar = tracery.Grammar(grammarJson)
 	grammar.add_modifiers(base_english)
 	return grammar.flatten("#" + origin + "#")
+	
+def populateFlavorText(textToPopulate):
+	grammar = tracery.Grammar(allFlavorGrammars)
+	grammar.add_modifiers(base_english)
+	cleanedTextToPopulate = textToPopulate.replace("((","#").replace("))","#")
+	return grammar.flatten(cleanedTextToPopulate)
+
+def chooseRandom(arr) :
+	return random.choice(arr)
 
 def addToNovel(newParagraph):
 	global novel
 	novel += "<p>" + newParagraph + "</p>"
 	
 novel = ""
-addToNovel("testing basic setup")
-addToNovel("I bought " + generateFromGrammar("magical-objects", "item") + " from this shop. five stars")
+
+for i in range(10):
+	review_sentiment = chooseRandom(["positive", "mixed", "negative"])
+	if review_sentiment == "positive":
+		addToNovel(chooseRandom(["★★★★★","★★★★☆"]))
+		addToNovel(populateFlavorText(generateFromGrammar("review-formats","positive-format")))
+	elif review_sentiment == "negative":
+		addToNovel(chooseRandom(["★☆☆☆☆","★★☆☆☆"]))
+		addToNovel(populateFlavorText(generateFromGrammar("review-formats","negative-format")))
+	else:
+		addToNovel(chooseRandom(["★★☆☆☆","★★★☆☆","★★★★☆"]))
+		addToNovel(populateFlavorText(generateFromGrammar("review-formats","mixed-format")))
+	addToNovel("<hr>")
 
 # Build an html file populated with the novel we've generated
 loader = FileSystemLoader(".")
