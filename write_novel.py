@@ -7,12 +7,23 @@ from jinja2 import FileSystemLoader, Environment
 import tracery
 from tracery.modifiers import base_english
 
-# This code is a mess, sorry!
+flavorGrammars = ["pottery-and-porcelain","a-tangled-tale","the-beggars-complaint","bought-and-paid-for"]
 
 # Utility functions
 
+bibliography = ""
+
+def generateBibliography():
+	global bibliography
+	for grammarFileName in flavorGrammars:
+		grammarStr = Path("grammars/"+grammarFileName+".json").read_text()
+		grammarJson = json.loads(grammarStr)
+		citation = "<p><a href='" + grammarJson["source-url"] + "'>" + grammarJson["source-title"] + "</a>, by " + grammarJson["source-author"] + ". " + grammarJson["source-date"] + ".</p>"
+		bibliography += citation
+		
+generateBibliography()
+
 def aggregateFlavorTextGrammars():
-	flavorGrammars = ["pottery-and-porcelain","a-tangled-tale"]
 	skipFields = ["source-url","source-title","source-author","source-date"]
 	combinedFlavorGrammar = {}
 	for grammarFileName in flavorGrammars:
@@ -48,7 +59,7 @@ def addToNovel(newParagraph):
 	
 novel = ""
 
-for i in range(10):
+for i in range(2000):
 	review_sentiment = chooseRandom(["positive", "mixed", "negative"])
 	if review_sentiment == "positive":
 		addToNovel(chooseRandom(["★★★★★","★★★★☆"]))
@@ -70,7 +81,8 @@ template = env.get_template("index.jinja")
 Path("index.html").write_text(
     template.render(
         {
-            "novel" : novel
+            "novel" : novel,
+            "bibliography" : bibliography
         }
     )
 )

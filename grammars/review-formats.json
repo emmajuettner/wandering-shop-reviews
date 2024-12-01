@@ -1,6 +1,16 @@
 {
-	"positive-format" : ["Offered a huge selection of products: #item#, #item#, #item#, #item#... I purchased #item# which was #item-descriptor#"],
+	"positive-format" : ["Offered a huge selection of products: #item#, #item#, #item#, #item#, &c. &c. I purchased #item# which was #item-descriptor#",
+	"What a #place-descriptor# shop! There is a wide variety of #item#",
+	"The staff were super nice and patient with us while we perused the #item#",
+	"Great shop, they stock a variety of #item# and #item#. The owner is very #person-descriptor#"],
 	"mixed-format" : ["Decent selection and I found #item# but the proprietor was #person-descriptor#",
-			"#time-phrase# I stopped in but it's not there anymore???"],
-	"negative-format" : ["A horrible experience, I bought #item# but it was #item-descriptor#"]
+			"#time-phrase# I stopped in but it's not there anymore???",
+			"has a weird amount of #item#",
+			"Good selection but weird #place-descriptor# vibes",
+			"Very nice selection! staff could be more #person-descriptor#",
+			"#anecdote-metaphor# #conclusory-phrase# the owner of the shop was #person-descriptor#",
+			"I wandered into this shop #time-phrase# and bought #item#. At first I thought it was #item-descriptor#, but then it turned out to be #item-descriptor#! I went back to get a refund but couldn't find the shop again"],
+	"negative-format" : ["A horrible experience, I bought #item# but it was #item-descriptor#",
+			"#too-expensive-sentence#",
+			"the staff was nothing short of #person-descriptor#"]
 }
